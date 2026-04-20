@@ -1,4 +1,8 @@
 import requests
+from resultats import Resultats
+from course import Course
+from pilote import Pilote
+from ecurie import Ecurie
 
 class Gestion_donnees:
     def __init__(self):

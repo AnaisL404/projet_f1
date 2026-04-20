@@ -1,10 +1,12 @@
+from resultats import Resultats
+
 class Course:
     def __init__(self, saison: int, date: str, nom_circuit: str, pays: str):
         self._saison = 0
         self.date = date
         self.nom_circuit = nom_circuit
         self.pays = pays
-        self.lst_resultas : list[Resultat] = []
+        self.lst_resultas : list[Resultats] = []
 
         self.saison = saison
 
