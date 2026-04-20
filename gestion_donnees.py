@@ -1,9 +1,10 @@
-from saison import Saison
 import requests
 
 class Gestion_donnees:
     def __init__(self):
-        self.lst_saison : list[Saison] = []
+        self.lst_courses : list[Course] = []
+        self.lst_pilotes : list[Pilote] = []
+        self.lst_ecuries : list[Ecurie] = []
 
     def call_api(self):
 
@@ -14,7 +15,8 @@ class Gestion_donnees:
             for x in range(2025,2026):
                 reponse = requests.get(f"{url_base}{x}/results/")
                 data = reponse.json()
-                print(data["MRData"]["RaceTable"]["Races"])
+
+                results = data["MRData"]["RaceTable"]["Races"]
 
                 
 
