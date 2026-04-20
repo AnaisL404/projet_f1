@@ -1,4 +1,6 @@
 class Ecurie:
+    """Represente une ecurie de f1
+    """
     def __init__(self, nom: str, nationalite: str):
         self.nom = nom
         self.nationalite = nationalite
