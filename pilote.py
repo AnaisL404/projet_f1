@@ -1,4 +1,6 @@
 class Pilote:
+    """Represente un pilote de F1
+    """
     def __init__(self, driver_id: str, prenom: str, nom: str, nationalite: str, date_naissance: str):
         self.driver_id = driver_id
         self.prenom = prenom

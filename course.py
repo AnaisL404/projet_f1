@@ -1,6 +1,8 @@
 from resultats import Resultats
 
 class Course:
+    """represente les course d'une saison
+    """
     def __init__(self, saison: int, date: str, nom_circuit: str, pays: str):
         self._saison = 0
         self.date = date
