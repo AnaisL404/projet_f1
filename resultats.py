@@ -1,23 +1,23 @@
+from pilote import Pilote
+from ecurie import Ecurie
+
 class Resultats:
     """Represente les résultats compris dans une course
     """
 
 
-    def __init__(self, Pilote : object, Ecurie : object, position : int, points : float, tours : int, statut : str, temps : str, meilleur_tour : str, vitesse_moy : float):
+    def __init__(self, Pilote : Pilote, Ecurie : Ecurie, position : int, points : float, tours : int, statut : str, meilleur_tour : str):
         self.pilote = Pilote
         self.ecurie = Ecurie
         self._position = position
         self._points = points
         self._tours = tours
         self.statut = statut
-        self.temps = temps
         self.meilleur_tour = meilleur_tour
-        self._vitesse_moy = vitesse_moy
 
         self.position = position
         self.points = points
         self.tours = tours
-        self.vitesse_moy = vitesse_moy
 
     #setters getters pour les attributs protégés
     @property
@@ -52,17 +52,6 @@ class Resultats:
             self._tours = nouveau_tour
         elif nouveau_tour < 0 :
             self._tours = 0
-
-    @property
-    def vitesse_moy(self):
-        return self._vitesse_moy
-    
-    @vitesse_moy.setter 
-    def vitesse_moy(self, nouvelle_vit : float):
-        if nouvelle_vit >= 0:
-            self._vitesse_moy = nouvelle_vit
-        elif nouvelle_vit < 0 :
-            self._vitesse_moy = 0
 
 
     def a_fini(self) -> bool:

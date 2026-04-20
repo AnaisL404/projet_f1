@@ -23,7 +23,7 @@ class Pilote:
         }
     
     def age(self) -> int:
-        annee = self.date_naissance[0:4]
+        annee = int(self.date_naissance[0:4])
 
         age = 2025 - annee
 

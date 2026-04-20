@@ -1,4 +1,5 @@
 from resultats import Resultats
+import datetime
 
 class Course:
     """represente les course d'une saison
@@ -23,3 +24,6 @@ class Course:
             self._saison = 1
         else:
             self._saison = saison
+
+    def ajouter_resultat(self, new_resultat:Resultats):
+        self.lst_resultas.append(new_resultat)
