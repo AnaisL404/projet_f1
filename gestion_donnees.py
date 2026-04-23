@@ -11,6 +11,16 @@ class Gestion_donnees:
         self.lst_pilotes : list[Pilote] = []
         self.lst_ecuries : list[Ecurie] = []
 
+    def _get_with_retry(self, url):
+        for x in range(5):
+            reponse = requests.get(url)
+            if reponse.status_code == 429:
+                print(f"Rate limit atteint, attente de {2}s...")
+                time.sleep(2)
+            else:
+                return reponse
+        raise Exception(f"Echec après 5 tentatives pour {url}")
+
     def call_api(self):
 
         url_base = "https://api.jolpi.ca/ergast/f1/"
@@ -20,9 +30,9 @@ class Gestion_donnees:
             for x in range(1950,2026):
                 for offset in range(0,401,100):
 
-                    time.sleep(0.3)
+                    time.sleep(0.5)
 
-                    reponse = requests.get(f"{url_base}{x}/results/?limit=100&offset={offset}")
+                    reponse = self._get_with_retry(f"{url_base}{x}/results/?limit=100&offset={offset}")
                     data = reponse.json()
 
                     race_list = data["MRData"]["RaceTable"]["Races"]
