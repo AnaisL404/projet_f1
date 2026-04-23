@@ -54,7 +54,7 @@ class Resultats:
             self._tours = 0
 
 
-    def a_fini(self) -> bool:
+    def a_fini(self) -> bool: 
         """Permet de determiner si le pilote a terminer la course ou non
 
         Returns:
@@ -62,7 +62,7 @@ class Resultats:
         """
         if self.statut == "Finished":
             return True
-        else:
+        else: ## jsp comment on va faire mais mettre le status du genre retirer, dsq, dns ect
             return False
         
     def to_dict(self) -> dict:

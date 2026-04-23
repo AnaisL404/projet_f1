@@ -29,6 +29,7 @@ class Gestion_donnees:
         #url de base + année et results = https://api.jolpi.ca/ergast/année/results/
         try:
             for x in range(1950,2026):
+                print(x)
                 for offset in range(0,401,100):
 
                     time.sleep(0.5)
@@ -96,7 +97,7 @@ class Gestion_donnees:
         Args:
             source (str): le ficher json
         """
-        with open("donne.json", "r", encoding="utf-8") as fichier:
+        with open(donnee, "r", encoding="utf-8") as fichier:
     
             donnees = json.load(fichier)
 
@@ -142,7 +143,7 @@ class Gestion_donnees:
                 new_course.ajouter_resultat(new_resultat)
 
 
-    def sauvegarder_json(self, donnee : str) -> None:
+    def sauvegarder_json(self, file : str) -> None:
         """Permet de sauvegarder les médias modifier lors du programme dasn le ficher json
 
         Args:
@@ -158,6 +159,19 @@ class Gestion_donnees:
 
             
         # 3. On sauvegarde la liste complète d'un seul coup !
-        with open("donnee.json", "w", encoding="utf-8") as fichier:
+        with open(file, "w", encoding="utf-8") as fichier:
             # json.dump ajoute la liste de dictio dans le fichier
             json.dump(liste_dictionnaires, fichier, indent=4)
+
+    def collecter_donnee(self):
+        try:
+            print("essaie de la lecture du fichiers json des données")
+            self.charger_json("donnee.json") 
+            print("Lecture du fichier json réusie !!")
+        except:
+            print("aucun fichier json disponible, lancement de la recupération API !")
+            self.call_api()
+            self.sauvegarder_json("donnee.json")
+            print("appels API terminé, fichier JSON crée !! ")
+
+
