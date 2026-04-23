@@ -1,4 +1,5 @@
 import requests
+import json
 from resultats import Resultats
 from course import Course
 from pilote import Pilote
@@ -96,3 +97,74 @@ for race in gestion.lst_courses:
     print(race.nom_circuit)
 
 
+    def charger_json(self, donnee : str) -> None:
+        """Permet de convertir le ficher json en objets
+
+        Args:
+            source (str): le ficher json
+        """
+        with open("donne.json", "r", encoding="utf-8") as fichier:
+    
+            donnees = json.load(fichier)
+
+        for course in donnees:
+            saison = course["saison"]
+            date = course["date"]
+            nom_circuit = course["nom_circuit"]
+            pays = course["pays"]
+
+            new_course = Course(saison, date, nom_circuit, pays)
+            self.lst_courses.append(new_course)
+
+            #recuper result pour boucler dessus tantot
+            results = course["lst_resultats"]
+
+
+            for resultat in results:
+                #creation du pilote
+                dico_driver = resultat["pilote"]
+                new_driver = Pilote(dico_driver["driver_id"], dico_driver["prenom"], dico_driver["nom"], dico_driver["nationalite"], dico_driver["date_naissance"])
+                            
+                if new_driver not in self.lst_pilotes:
+                    self.lst_pilotes.append(new_driver)
+
+                #creation de l'écurie
+                dico_ecurie = resultat["ecurie"]
+                new_ecurie = Ecurie(dico_ecurie["nom"], dico_ecurie["nationalite"])
+
+                if new_ecurie not in self.lst_ecuries:
+                    self.lst_ecuries.append(new_ecurie)
+
+                #creation des resultats
+                new_resultat = Resultats(
+                new_driver,
+                new_ecurie,
+                resultat["position"],
+                resultat["points"],
+                resultat["tours"],
+                resultat["statut"],
+                resultat["meilleur_tour"]
+                )
+
+                new_course.ajouter_resultat(new_resultat)
+
+
+    def sauvegarder_json(self, donnee : str) -> None:
+        """Permet de sauvegarder les médias modifier lors du programme dasn le ficher json
+
+        Args:
+            source (str): le ficher json
+        """
+
+        liste_dictionnaires = []
+        for course in self.lst_courses:
+            # 2. On appelle notre méthode pour obtenir la version dictionnaire
+            dico_course = course.to_dict()
+	        # On ajoute à la liste de dictionnaires
+            liste_dictionnaires.append(dico_course)
+
+            
+        # 3. On sauvegarde la liste complète d'un seul coup !
+        with open("donnee.json", "w", encoding="utf-8") as fichier:
+            # json.dump ajoute la liste de dictio dans le fichier
+            json.dump(liste_dictionnaires, fichier, indent=4)
