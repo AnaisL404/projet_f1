@@ -28,3 +28,11 @@ class Pilote:
         age = 2025 - annee
 
         return age
+    
+    def __str__(self) -> str:
+        """permet d'imprimer le pilote
+
+        Returns:
+            str: le pilote imprimer
+        """
+        return (f"{self.prenom} {self.nom}, {self.nationalite} - Né le {self.date_naissance} - Age : {self.age()} ans")

@@ -72,15 +72,11 @@ class Resultats:
             dict: le dictionnaire créé
         """
         return {
-            "pilote" : self.pilote,
-            "ecurie": self.ecurie,
+            "pilote" : self.pilote.to_dict(),
+            "ecurie": self.ecurie.to_dict(),
             "position": self.position,
             "points": self.points,
             "tours" : self.tours,
             "statut" : self.statut,
-            "temps" : self.temps,
-            "meilleur_tour" : self.meilleur_tour,
-            "vitesse_moy" : self.vitesse_moy
+            "meilleur_tour" : self.meilleur_tour
             }
-
-    #def from_dict()

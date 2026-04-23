@@ -89,13 +89,6 @@ class Gestion_donnees:
             print(e)
 
 
-gestion = Gestion_donnees()
-
-gestion.call_api()
-
-for race in gestion.lst_courses:
-    print(race.nom_circuit)
-
 
     def charger_json(self, donnee : str) -> None:
         """Permet de convertir le ficher json en objets
@@ -160,7 +153,7 @@ for race in gestion.lst_courses:
         for course in self.lst_courses:
             # 2. On appelle notre méthode pour obtenir la version dictionnaire
             dico_course = course.to_dict()
-	        # On ajoute à la liste de dictionnaires
+            # On ajoute à la liste de dictionnaires
             liste_dictionnaires.append(dico_course)
 
             
