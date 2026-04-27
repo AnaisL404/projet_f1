@@ -43,6 +43,7 @@ class Gestion_donnees:
                         saison = int(race["season"])
                         date = race["date"]
                         nom_course = race["raceName"]
+                        nom_circuit = race["Circuit"]["circuitId"]
                         pays = race["Circuit"]["Location"]["country"]
 
                         #recuper result pour boucler dessus tantot
@@ -52,10 +53,10 @@ class Gestion_donnees:
                             if self.lst_courses[len(self.lst_courses)-1].nom_circuit == nom_course:
                                 new_course = self.lst_courses[len(self.lst_courses)-1]
                             else:
-                                new_course = Course(saison, date, nom_course, pays)
+                                new_course = Course(saison, date, nom_course, nom_circuit, pays)
                                 self.lst_courses.append(new_course)
                         else:
-                            new_course = Course(saison, date, nom_course, pays)
+                            new_course = Course(saison, date, nom_course, nom_circuit, pays)
                             self.lst_courses.append(new_course)
 
 
@@ -104,10 +105,11 @@ class Gestion_donnees:
         for course in donnees:
             saison = course["saison"]
             date = course["date"]
+            nom_gp = course["nom_gp"]
             nom_circuit = course["nom_circuit"]
             pays = course["pays"]
 
-            new_course = Course(saison, date, nom_circuit, pays)
+            new_course = Course(saison, date, nom_gp, nom_circuit, pays)
             self.lst_courses.append(new_course)
 
             #recuper result pour boucler dessus tantot

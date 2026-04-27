@@ -4,9 +4,10 @@ from pilote import Pilote
 class Course:
     """represente les course d'une saison
     """
-    def __init__(self, saison: int, date: str, nom_circuit: str, pays: str):
+    def __init__(self, saison: int, date: str, nom_gp : str, nom_circuit: str, pays: str):
         self._saison = 0
         self.date = date
+        self.nom_gp = nom_gp
         self.nom_circuit = nom_circuit
         self.pays = pays
         self.lst_resultats : list[Resultats] = []
@@ -53,6 +54,7 @@ class Course:
         return {
             "saison": self.saison,
             "date": self.date,
+            "nom_gp": self.nom_gp,
             "nom_circuit": self.nom_circuit,
             "pays": self.pays,
             "lst_resultats": lst_res_dico
