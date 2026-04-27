@@ -161,7 +161,7 @@ class Gestion_donnees:
         # 3. On sauvegarde la liste complète d'un seul coup !
         with open(file, "w", encoding="utf-8") as fichier:
             # json.dump ajoute la liste de dictio dans le fichier
-            json.dump(liste_dictionnaires, fichier, indent=4)
+            json.dump(liste_dictionnaires, fichier, indent=4, ensure_ascii=False)
 
     def collecter_donnee(self):
         try:
@@ -173,5 +173,3 @@ class Gestion_donnees:
             self.call_api()
             self.sauvegarder_json("donnee.json")
             print("appels API terminé, fichier JSON crée !! ")
-
-

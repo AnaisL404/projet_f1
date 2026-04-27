@@ -65,7 +65,7 @@ class Course:
 
         return vainqueur
     
-    def podium(self):
+    def podium(self) -> list:
         for resultat in self.lst_resultats:
             if resultat.position == 1:
                 premier = resultat.pilote
@@ -73,8 +73,5 @@ class Course:
                 deuxieme = resultat.pilote
             if resultat.position == 3:
                 troisieme = resultat.pilote
-        
-        print(f"Le podium est:")
-        print(f"{premier}🥇")
-        print(f"{deuxieme}🥈")
-        print(f"{troisieme}🥉")
+        lst_podium = [premier, deuxieme, troisieme]
+        return lst_podium
