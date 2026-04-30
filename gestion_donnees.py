@@ -46,11 +46,11 @@ class Gestion_donnees:
                         nom_circuit = race["Circuit"]["circuitId"]
                         pays = race["Circuit"]["Location"]["country"]
 
-                        #recuper result pour boucler dessus tantot
+                        #recupérer result pour boucler dessus tantot
                         results = race["Results"]
 
                         if len(self.lst_courses) != 0:
-                            if self.lst_courses[len(self.lst_courses)-1].nom_circuit == nom_course:
+                            if self.lst_courses[len(self.lst_courses)-1].nom_circuit == nom_circuit:
                                 new_course = self.lst_courses[len(self.lst_courses)-1]
                             else:
                                 new_course = Course(saison, date, nom_course, nom_circuit, pays)

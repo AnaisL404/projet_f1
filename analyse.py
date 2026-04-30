@@ -47,25 +47,28 @@ class Analyse:
         plt.title("Top 10 des grands prix qui ont été présents lors du plus grand nombre de saisons ")
         plt.show()
     
-        return liste_10_max, liste_nb_apparitions
+        
         
 
 
     def meilleur_temps_circuit(gestion: Gestion_donnees):
         # boucle pour voir les afficher les nom de circuit et pouvoir choisir le circuit voulu
         liste_circuit = []
+        liste_nom = []
         for course in gestion.lst_courses:
-            if course.nom_circuit not in liste_circuit:
-                liste_circuit.append(course.nom_circuit)
+            if course.saison >= 2004:
+                if course.nom_circuit not in liste_nom:
+                    liste_circuit.append(course)
+                    liste_nom.append(course.nom_circuit)
 
         index = 0
         for course in liste_circuit:
-            print(f"{index}. {course}")
+            print(f"{index}. {course.nom_circuit} - {course.nom_gp}")
             index += 1
         try:
             print()
-            circuit_int = int(input("Entrez le numéro du circuit voulu :"))
-            circuit_str = gestion.lst_courses[circuit_int]
+            circuit_int = int(input("Entrez le numéro du circuit voulu: "))
+            circuit_str = liste_circuit[circuit_int]
 
         except:
             print("Choix du circuit out of range")

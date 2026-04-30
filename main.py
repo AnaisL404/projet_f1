@@ -12,10 +12,11 @@ gestion = Gestion_donnees()
 
 gestion.collecter_donnee()
 
-
-meilleur_temps =Analyse.meilleur_temps_circuit(gestion)
-print(meilleur_temps)
 Analyse.circuit_plus_longtemps(gestion)
+#for x in range(37):
+    #meilleur_temps =Analyse.meilleur_temps_circuit(gestion)
+    #print(meilleur_temps)
+
 
 
 #print(f"Le podium est:")
