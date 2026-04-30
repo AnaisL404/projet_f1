@@ -8,14 +8,15 @@ from analyse import Analyse
 
 
 gestion = Gestion_donnees()
-
+#1,2,7,26,29,33
 
 gestion.collecter_donnee()
 
-Analyse.circuit_plus_longtemps(gestion)
-#for x in range(37):
-    #meilleur_temps =Analyse.meilleur_temps_circuit(gestion)
-    #print(meilleur_temps)
+#Analyse.circuit_plus_longtemps(gestion)
+for x in range(37): 
+    meilleur_temps =Analyse.meilleur_temps_circuit(gestion)
+    print()
+    print(meilleur_temps)
 
 
 

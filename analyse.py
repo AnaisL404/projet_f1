@@ -100,7 +100,15 @@ class Analyse:
                                     best_lap_milli = milli
 
         meilleur_temps = (f"{best_lap_min}:{best_lap_sec}.{best_lap_milli}")
-        return meilleur_temps
+
+        for course in gestion.lst_courses:
+            for resultat in course.lst_resultats:
+                if resultat.meilleur_tour == meilleur_temps:
+                    pilote = resultat.pilote.nom
+                    annee = course.saison
+
+        #1,2,7,26,29,33 ne fonctionnent pas mais jsp pk
+        return (f"Le meilleur temps à été réaliser par {pilote} en {annee} et est de {meilleur_temps}")
 
 
 
