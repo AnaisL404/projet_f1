@@ -8,7 +8,6 @@ from analyse import Analyse
 
 
 gestion = Gestion_donnees()
-#1,2,7,26,29,33
 
 gestion.collecter_donnee()
 
@@ -35,7 +34,7 @@ except:
 
 
 
-Analyse.pilotes_ecurie(gestion, ecurie_str)
+Analyse.top3_points_ecurie(gestion, ecurie_str)
 
 
         

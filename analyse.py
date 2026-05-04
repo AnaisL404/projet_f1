@@ -168,7 +168,7 @@ class Analyse:
 
         plt.show()
 
-    ## les trier pour quil en ordre!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    ## les trier pour qu'il soit en ordre!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     def points_saison(gestion : Gestion_donnees, saison_voulue : int):
         courses_saison = []
         for course in gestion.lst_courses:
@@ -190,7 +190,7 @@ class Analyse:
 
 
                 
-    def points_pilotes_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
+    def top3_points_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
         #mettre tous les pilotes qui ont été dans l'écurie choisi
         lst_pilotes = []
         liste_nom = []
@@ -209,9 +209,28 @@ class Analyse:
                 results[resultat.pilote.driver_id] += resultat.points
             else:
                 results[resultat.pilote.driver_id] = resultat.points
-        
-        for pilote in results:
-            print(f"{pilote} : {results[pilote]} points")
 
-        return lst_pilotes
-        
+        valeurmax = 0
+        pilote_max = ""
+        liste_top_3 = []
+
+        #boucle pour trouver les 3 pilotes avec le plus de points
+        try:
+            for _ in range(3):
+                valeurmax = 0
+                pilote_max = ""
+                #boucle pour trouver chaque valeur de points  max
+                for pilote in results:
+                    if results[pilote] > valeurmax:
+                        valeurmax = results[pilote]
+                        pilote_max = pilote
+                
+                #ajout a liste des 3 pilotes et supprime du dictionnaire
+                liste_top_3.append((pilote_max, valeurmax))
+                results.pop(pilote_max)
+
+            for pilote , points in liste_top_3:
+                print(f"{pilote} : {points} points")
+        except Exception as e :
+            print(e)
+
