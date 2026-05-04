@@ -13,14 +13,34 @@ gestion = Gestion_donnees()
 gestion.collecter_donnee()
 
 #Analyse.circuit_plus_longtemps(gestion)
-for x in range(37): 
-    meilleur_temps =Analyse.meilleur_temps_circuit(gestion)
-    print()
-    print(meilleur_temps)
+lst_ecurie = []
+liste_nom = []
+#choisir l'écurie
+for ecurie in gestion.lst_ecuries:
+        if ecurie.nom not in liste_nom:
+                lst_ecurie.append(ecurie)
+                liste_nom.append(ecurie.nom)
+
+index = 0
+for team in lst_ecurie:
+        print(f"{index}. {team.nom}")
+        index += 1
+try:
+        print()
+        ecurie_int = int(input("Entrez le numéro de l'écurie voulu: "))
+        ecurie_str = lst_ecurie[ecurie_int]
+
+except:
+        print("Choix du circuit out of range")
 
 
 
-#print(f"Le podium est:")
- #       print(f"{premier}🥇")
-  #      print(f"{deuxieme}🥈")
-   #     print(f"{troisieme}🥉")
+Analyse.pilotes_ecurie(gestion, ecurie_str)
+
+
+        
+    
+
+
+
+

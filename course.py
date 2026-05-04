@@ -60,7 +60,7 @@ class Course:
             "lst_resultats": lst_res_dico
         }
     
-    def def_vainqueur(self) -> Pilote:
+    def vainqueur(self) -> Pilote:
         for resultat in self.lst_resultats:
             if resultat.position == 1:
                 vainqueur = resultat.pilote

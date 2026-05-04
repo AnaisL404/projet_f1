@@ -73,6 +73,7 @@ class Analyse:
         except:
             print("Choix du circuit out of range")
 
+        #comparer les temps
         best_lap_min = 10000
         best_lap_sec = 10000
         best_lap_milli = 10000
@@ -83,6 +84,7 @@ class Analyse:
                         minutes_str, reste = resultat.meilleur_tour.split(":")
                         secondes_str, millisecondes_str = reste.split(".")
 
+
                         min= int(minutes_str)
                         sec = int(secondes_str)
                         milli = int(millisecondes_str)
@@ -91,25 +93,125 @@ class Analyse:
                             best_lap_min = min
                             best_lap_sec = sec
                             best_lap_milli = milli
+                            pilote = resultat.pilote.nom
+                            annee = course.saison
                         elif min == best_lap_min:
                             if sec < best_lap_sec:
                                 best_lap_sec = sec
                                 best_lap_milli = milli
+                                pilote = resultat.pilote.nom
+                                annee = course.saison 
                             elif sec == best_lap_sec:
                                 if milli < best_lap_milli:
                                     best_lap_milli = milli
+                                    pilote = resultat.pilote.nom
+                                    annee = course.saison  
+
+        if len(str(best_lap_milli)) == 2:
+            best_lap_milli = f"0{best_lap_milli}"
+        if len(str(best_lap_milli)) == 1:
+            best_lap_milli = f"00{best_lap_milli}"
 
         meilleur_temps = (f"{best_lap_min}:{best_lap_sec}.{best_lap_milli}")
 
-        for course in gestion.lst_courses:
-            for resultat in course.lst_resultats:
-                if resultat.meilleur_tour == meilleur_temps:
-                    pilote = resultat.pilote.nom
-                    annee = course.saison
-
-        #1,2,7,26,29,33 ne fonctionnent pas mais jsp pk
+        
         return (f"Le meilleur temps à été réaliser par {pilote} en {annee} et est de {meilleur_temps}")
 
 
+    def plus_de_podium(gestion : Gestion_donnees, pilote_choisi: Pilote):
+
+        nb_podium = 0
+        for course in gestion.lst_courses:
+            podium = course.podium()
+            podium_nom = [podium[0].driver_id, podium[1].driver_id, podium[2].driver_id,]
+            if pilote_choisi.driver_id in podium_nom:
+                nb_podium += 1
+        return f"Le pilote {pilote_choisi} à fait {nb_podium} podiums dans sa carrière"
+        
+    def plus_de_win(gestion : Gestion_donnees, pilote_choisi: Pilote):
+
+        nb_win = 0
+        for course in gestion.lst_courses:
+            if pilote_choisi.driver_id == course.vainqueur().driver_id:
+                nb_win += 1
+        return f"Le pilote {pilote_choisi} à fait {nb_win} podiums dans sa carrière"
 
     
+
+    def pourcentage_win_saison(gestion : Gestion_donnees, saison_voulue : int):
+        courses_saison = []
+        for course in gestion.lst_courses:
+            if course.saison == saison_voulue:
+                courses_saison.append(course)
+
+        winners = []
+        nb_wins = []
+        for course in courses_saison:
+            for resultat in course.lst_resultats:
+                if resultat.position == 1:
+                    if resultat.pilote.driver_id in winners:
+                        for x in range(len(winners)):
+                            if resultat.pilote.driver_id == winners[x]:
+                                nb_wins[x] += 1
+
+                    else:
+                        winners.append(resultat.pilote.driver_id)
+                        nb_wins.append(1)
+        
+        labels = winners
+        parts = nb_wins
+
+        plt.pie(parts)
+
+        plt.legend(labels)
+        plt.title(f"Repartition des wins de la saison {saison_voulue} ")
+
+        plt.show()
+
+    ## les trier pour quil en ordre!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    def points_saison(gestion : Gestion_donnees, saison_voulue : int):
+        courses_saison = []
+        for course in gestion.lst_courses:
+            if course.saison == saison_voulue:
+                courses_saison.append(course)
+
+        results = {}
+        for course in courses_saison:
+            for resultat in course.lst_resultats:
+                if resultat.pilote.driver_id in results:
+                    results[resultat.pilote.driver_id] += resultat.points
+                else:
+                    results[resultat.pilote.driver_id] = resultat.points
+        
+        for pilote in results:
+            print(f"{pilote} : {results[pilote]} points")
+        
+
+
+
+                
+    def points_pilotes_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
+        #mettre tous les pilotes qui ont été dans l'écurie choisi
+        lst_pilotes = []
+        liste_nom = []
+        for course in gestion.lst_courses:
+           for resultat in course.lst_resultats:
+               if resultat.ecurie.nom == ecurie_choisi.nom:
+                    if resultat.pilote.driver_id not in liste_nom:
+                       lst_pilotes.append(resultat)
+                       liste_nom.append(resultat.pilote.driver_id)
+                    else:
+                        lst_pilotes.append(resultat)
+
+        results = {}
+        for resultat in lst_pilotes:
+            if resultat.pilote.driver_id in results:
+                results[resultat.pilote.driver_id] += resultat.points
+            else:
+                results[resultat.pilote.driver_id] = resultat.points
+        
+        for pilote in results:
+            print(f"{pilote} : {results[pilote]} points")
+
+        return lst_pilotes
+        
