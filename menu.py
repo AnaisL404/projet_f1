@@ -8,11 +8,14 @@ from analyse import Analyse
 ## input des écurie dans le genre de menu
 lst_ecurie = []
 #choisir l'écurie
+
 for ecurie in gestion.lst_ecuries:
+
         if ecurie.nom not in lst_ecurie:
                 lst_ecurie.append(ecurie)
 
 index = 0
+
 for team in lst_ecurie:
         print(f"{index}. {team.nom}")
         index += 1
@@ -29,12 +32,15 @@ except:
 #choisir le pilote
 lst_pilote = []
 liste_nom = []
+
 for pilote in gestion.lst_pilotes:
+
         if pilote.driver_id not in liste_nom:
                 lst_pilote.append(pilote)
                 liste_nom.append(pilote.driver_id)
 
 index = 0
+
 for driver in lst_pilote:
         print(f"{index}. {driver.prenom}  {driver.nom}")
         index += 1

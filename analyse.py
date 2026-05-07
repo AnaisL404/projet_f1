@@ -10,9 +10,12 @@ class Analyse:
 
     def circuit_plus_longtemps(gestion : Gestion_donnees):
         dico_courses = {}
+
         for course in gestion.lst_courses:
+
             if course.nom_circuit in dico_courses:
                 dico_courses[course.nom_circuit] += 1
+                
             else:
                 dico_courses[course.nom_circuit] = 1
         
@@ -25,8 +28,10 @@ class Analyse:
         for _ in range(10):
             valeurmax = 0
             circuit_max = ""
+
             #boucle pour trouver chaque circuit max
             for circuit in dico_courses:
+
                 if dico_courses[circuit] > valeurmax:
                     valeurmax = dico_courses[circuit]
                     circuit_max = circuit
@@ -55,16 +60,21 @@ class Analyse:
         # boucle pour voir les afficher les nom de circuit et pouvoir choisir le circuit voulu
         liste_circuit = []
         liste_nom = []
+
         for course in gestion.lst_courses:
+
             if course.saison >= 2004:
+
                 if course.nom_circuit not in liste_nom:
                     liste_circuit.append(course)
                     liste_nom.append(course.nom_circuit)
 
         index = 0
+
         for course in liste_circuit:
             print(f"{index}. {course.nom_circuit} - {course.nom_gp}")
             index += 1
+
         try:
             print()
             circuit_int = int(input("Entrez le numéro du circuit voulu: "))
@@ -77,9 +87,13 @@ class Analyse:
         best_lap_min = 10000
         best_lap_sec = 10000
         best_lap_milli = 10000
+
         for course in gestion.lst_courses:
+
             if course.nom_circuit == circuit_str.nom_circuit:
+
                 for resultat in course.lst_resultats:
+
                     if resultat.meilleur_tour != 0:
                         minutes_str, reste = resultat.meilleur_tour.split(":")
                         secondes_str, millisecondes_str = reste.split(".")
@@ -95,13 +109,17 @@ class Analyse:
                             best_lap_milli = milli
                             pilote = resultat.pilote.nom
                             annee = course.saison
+
                         elif min == best_lap_min:
+
                             if sec < best_lap_sec:
                                 best_lap_sec = sec
                                 best_lap_milli = milli
                                 pilote = resultat.pilote.nom
                                 annee = course.saison 
+
                             elif sec == best_lap_sec:
+
                                 if milli < best_lap_milli:
                                     best_lap_milli = milli
                                     pilote = resultat.pilote.nom
@@ -109,6 +127,7 @@ class Analyse:
 
         if len(str(best_lap_milli)) == 2:
             best_lap_milli = f"0{best_lap_milli}"
+
         if len(str(best_lap_milli)) == 1:
             best_lap_milli = f"00{best_lap_milli}"
 
@@ -121,9 +140,12 @@ class Analyse:
     def plus_de_podium(gestion : Gestion_donnees, pilote_choisi: Pilote):
 
         nb_podium = 0
+
         for course in gestion.lst_courses:
+
             podium = course.podium()
             podium_nom = [podium[0].driver_id, podium[1].driver_id, podium[2].driver_id,]
+
             if pilote_choisi.driver_id in podium_nom:
                 nb_podium += 1
         return f"Le pilote {pilote_choisi} à fait {nb_podium} podiums dans sa carrière"
@@ -132,25 +154,35 @@ class Analyse:
 
         nb_win = 0
         for course in gestion.lst_courses:
+
             if pilote_choisi.driver_id == course.vainqueur().driver_id:
                 nb_win += 1
+
         return f"Le pilote {pilote_choisi} à fait {nb_win} podiums dans sa carrière"
 
     
 
     def pourcentage_win_saison(gestion : Gestion_donnees, saison_voulue : int):
         courses_saison = []
+
         for course in gestion.lst_courses:
+
             if course.saison == saison_voulue:
                 courses_saison.append(course)
 
         winners = []
         nb_wins = []
+
         for course in courses_saison:
+
             for resultat in course.lst_resultats:
+
                 if resultat.position == 1:
+
                     if resultat.pilote.driver_id in winners:
+
                         for x in range(len(winners)):
+
                             if resultat.pilote.driver_id == winners[x]:
                                 nb_wins[x] += 1
 
@@ -171,15 +203,21 @@ class Analyse:
     ## les trier pour qu'il soit en ordre!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     def points_saison(gestion : Gestion_donnees, saison_voulue : int):
         courses_saison = []
+
         for course in gestion.lst_courses:
+
             if course.saison == saison_voulue:
                 courses_saison.append(course)
 
         results = {}
+
         for course in courses_saison:
+
             for resultat in course.lst_resultats:
+
                 if resultat.pilote.driver_id in results:
                     results[resultat.pilote.driver_id] += resultat.points
+
                 else:
                     results[resultat.pilote.driver_id] = resultat.points
         
@@ -194,19 +232,27 @@ class Analyse:
         #mettre tous les pilotes qui ont été dans l'écurie choisi
         lst_pilotes = []
         liste_nom = []
+
         for course in gestion.lst_courses:
+           
            for resultat in course.lst_resultats:
+               
                if resultat.ecurie.nom == ecurie_choisi.nom:
+                    
                     if resultat.pilote.driver_id not in liste_nom:
                        lst_pilotes.append(resultat)
                        liste_nom.append(resultat.pilote.driver_id)
+
                     else:
                         lst_pilotes.append(resultat)
 
         results = {}
+
         for resultat in lst_pilotes:
+
             if resultat.pilote.driver_id in results:
                 results[resultat.pilote.driver_id] += resultat.points
+
             else:
                 results[resultat.pilote.driver_id] = resultat.points
 
@@ -216,11 +262,14 @@ class Analyse:
 
         #boucle pour trouver les 3 pilotes avec le plus de points
         try:
+
             for _ in range(3):
                 valeurmax = 0
                 pilote_max = ""
+
                 #boucle pour trouver chaque valeur de points  max
                 for pilote in results:
+                    
                     if results[pilote] > valeurmax:
                         valeurmax = results[pilote]
                         pilote_max = pilote
@@ -231,6 +280,6 @@ class Analyse:
 
             for pilote , points in liste_top_3:
                 print(f"{pilote} : {points} points")
+
         except Exception as e :
             print(e)
-
