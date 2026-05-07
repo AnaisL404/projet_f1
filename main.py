@@ -32,13 +32,19 @@ try:
 except:
         print("Choix du circuit out of range")
 
-
-
 Analyse.top3_points_ecurie(gestion, ecurie_str)
 
 
-        
+# 1. calcul des points (filtrage + somme)
+#results = Analyse.points_ecurie(gestion, ecurie_str)
+
+# 2. tri + affichage top 3
+#Analyse.afficher_top3(results)
+    """j'ai essayer de faire les truc d'écurie en def séparer mais pour l'instant j'ai juste tous les points que les pilotes ont fait dans
+        leur carrière
+    """
     
+
 
 
 

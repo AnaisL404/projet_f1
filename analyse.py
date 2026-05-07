@@ -283,3 +283,114 @@ class Analyse:
 
         except Exception as e :
             print(e)
+
+
+    def top3_podium_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
+        #mettre tous les pilotes qui ont été dans l'écurie choisi
+        lst_pilotes = []
+        liste_nom = []
+
+        for course in gestion.lst_courses:
+           
+           for resultat in course.lst_resultats:
+               
+               if resultat.ecurie.nom == ecurie_choisi.nom:
+                    
+                    if resultat.pilote.driver_id not in liste_nom:
+                       lst_pilotes.append(resultat)
+                       liste_nom.append(resultat.pilote.driver_id)
+
+                    else:
+                        lst_pilotes.append(resultat)
+
+
+
+    
+    def pilotes_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
+
+        lst_pilotes = []
+        liste_nom = []
+        pilotes = {}
+
+        for course in gestion.lst_courses:
+
+            for resultat in course.lst_resultats:
+
+                if resultat.ecurie.nom == ecurie_choisi.nom:
+
+                    if resultat.pilote.driver_id not in liste_nom:
+                       liste_nom.append(resultat.pilote.driver_id)
+                       pilote = resultat.pilote.driver_id
+
+                    else:
+                        pilotes[pilote] = 0
+
+        return pilotes
+    
+
+
+
+    
+
+    def afficher_top3(results):
+
+        results_copy = results.copy()
+
+        liste_top_3 = []
+
+        try:
+
+            for _ in range(3):
+
+                valeurmax = 0
+                pilote_max = ""
+
+                for pilote in results_copy:
+
+                    if results_copy[pilote] > valeurmax:
+
+                        valeurmax = results_copy[pilote]
+                        pilote_max = pilote
+
+                liste_top_3.append((pilote_max, valeurmax))
+
+                results_copy.pop(pilote_max)
+
+            for pilote, valeur in liste_top_3:
+
+                print(f"{pilote} : {valeur}")
+
+        except Exception as e:
+            print(e)
+
+
+    def podiums_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
+
+        results = Analyse.pilotes_ecurie(gestion, ecurie_choisi)
+
+        for course in gestion.lst_courses:
+
+            podium = course.podium()
+
+            for pilote in podium:
+
+                if pilote.driver_id in results:
+                    results[pilote.driver_id] += 1
+
+        return results
+    
+
+    def points_ecurie(gestion, ecurie_choisi):
+
+        results = Analyse.pilotes_ecurie(gestion, ecurie_choisi)
+
+        for course in gestion.lst_courses:
+
+            for resultat in course.lst_resultats:
+
+                pilote = resultat.pilote.driver_id
+
+                if pilote in results:
+                    results[pilote] += resultat.points
+
+        return results
