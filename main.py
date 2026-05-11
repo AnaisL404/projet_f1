@@ -4,48 +4,113 @@ from course import Course
 from pilote import Pilote
 from ecurie import Ecurie
 from analyse import Analyse
-
-
+from menu import Menu
 
 gestion = Gestion_donnees()
 
 gestion.collecter_donnee()
 
-#Analyse.circuit_plus_longtemps(gestion)
-lst_ecurie = []
-liste_nom = []
-#choisir l'écurie
-for ecurie in gestion.lst_ecuries:
-        if ecurie.nom not in liste_nom:
-                lst_ecurie.append(ecurie)
-                liste_nom.append(ecurie.nom)
-
-index = 0
-for team in lst_ecurie:
-        print(f"{index}. {team.nom}")
-        index += 1
-try:
-        print()
-        ecurie_int = int(input("Entrez le numéro de l'écurie voulu: "))
-        ecurie_str = lst_ecurie[ecurie_int]
-
-except:
-        print("Choix du circuit out of range")
-
-Analyse.top3_points_ecurie(gestion, ecurie_str)
+quitter = 1000000000
 
 
-# 1. calcul des points (filtrage + somme)
-#results = Analyse.points_ecurie(gestion, ecurie_str)
-
-# 2. tri + affichage top 3
-#Analyse.afficher_top3(results)
-    """j'ai essayer de faire les truc d'écurie en def séparer mais pour l'instant j'ai juste tous les points que les pilotes ont fait dans
-        leur carrière
-    """
+while quitter != 0:
+    Menu.menu_principal()
     
+    try:
+        choix1 = int(input("Entre le numéro du choix voulu: "))
+        
+        match choix1:
+            
+            #principal
+            case 0:
+                print("Merci")
+                quitter = 0
+            #principal    
+            case 1:
+                Menu.menu_stat()
+                
+                try:
+                    choix2 = int(input("Entre le numéro du choix voulu: "))
+                    
+                    match choix2:
+                        
+                        #stat
+                        case 1:
+                            pass
+                        #stat
+                        case 2:
+                            Menu.menu_ecuries()
+                
+                            try:
+                                choix3 = int(input("Entre le numéro du choix voulu: "))
+                                
+                                match choix3:
+                                    
+                                    #win
+                                    case 1:
+                                        pass
+                                    #points
+                                    case 2:
+                                        pass
+                                    #podiums
+                                    case 3:
+                                        pass
+                            except:
+                                print("Choix du circuit out of range") 
+                             
+                        #stat       
+                        case 3:
+                            Menu.menu_pilotes()
+                
+                            try:
+                                choix4 = int(input("Entre le numéro du choix voulu: "))
+                                
+                                match choix4:
+                                    
+                                    #win
+                                    case 1:
+                                        pass
+                                    #points
+                                    case 2:
+                                        pass
+                                    #podiums
+                                    case 3:
+                                        pass
+                            except:
+                                print("Choix du circuit out of range") 
+                                
+                        #stat       
+                        case 4:
+                            Menu.menu_saisons()
+                
+                            try:
+                                choix5 = int(input("Entre le numéro du choix voulu: "))
+                                
+                                match choix5:
+                                    
+                                    #win
+                                    case 1:
+                                        pass
+                                    #points
+                                    case 2:
+                                        pass
+                                    #podiums
+                                    case 3:
+                                        pass
+                            except:
+                                print("Choix du circuit out of range") 
+                
+                except:
+                    print("Choix du circuit out of range")  
+               
+            #principal
+            case 2:
+                pass
 
-
-
-
-
+            
+                
+                
+        
+        
+    except:
+        print("Choix du circuit out of range") 

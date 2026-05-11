@@ -202,7 +202,7 @@ class Analyse:
 
     ## les trier pour qu'il soit en ordre!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     def points_saison(gestion : Gestion_donnees, saison_voulue : int):
-        courses_saison = []
+        courses_saison : list[Course]= []
 
         for course in gestion.lst_courses:
 
@@ -221,94 +221,38 @@ class Analyse:
                 else:
                     results[resultat.pilote.driver_id] = resultat.points
         
-        for pilote in results:
-            print(f"{pilote} : {results[pilote]} points")
+        lst_lst = list(results.items())
+
+        return lst_lst
+
+
+
+    def tri_points(lst_lst : list) -> list[list]:
+        liste_a_trier : list[list] = lst_lst.copy()
+
+        #si la liste est vide ou ne contient qu'un élément
+        #elle est triée, on renvoie directement la liste + sortir de la boucle infini
+        if len(liste_a_trier) <= 1:
+            return liste_a_trier
         
+        pivot = liste_a_trier[len(liste_a_trier) -1] #pivot est le dernier élément de la liste
+
+        petits = []
+        grands = []
 
 
-
-                
-    def top3_points_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
-        #mettre tous les pilotes qui ont été dans l'écurie choisi
-        lst_pilotes = []
-        liste_nom = []
-
-        for course in gestion.lst_courses:
-           
-           for resultat in course.lst_resultats:
-               
-               if resultat.ecurie.nom == ecurie_choisi.nom:
-                    
-                    if resultat.pilote.driver_id not in liste_nom:
-                       lst_pilotes.append(resultat)
-                       liste_nom.append(resultat.pilote.driver_id)
-
-                    else:
-                        lst_pilotes.append(resultat)
-
-        results = {}
-
-        for resultat in lst_pilotes:
-
-            if resultat.pilote.driver_id in results:
-                results[resultat.pilote.driver_id] += resultat.points
-
+        for x in range(len(liste_a_trier) -1): #parcourt tous les éléments suf le pivot
+            if liste_a_trier[x][1] < pivot[1]:
+                petits.append(liste_a_trier[x]) #ajoute les éléments plus petits que le pivot
             else:
-                results[resultat.pilote.driver_id] = resultat.points
+                grands.append(liste_a_trier[x]) #ajoute les éléments plus grands que le pivot
 
-        valeurmax = 0
-        pilote_max = ""
-        liste_top_3 = []
-
-        #boucle pour trouver les 3 pilotes avec le plus de points
-        try:
-
-            for _ in range(3):
-                valeurmax = 0
-                pilote_max = ""
-
-                #boucle pour trouver chaque valeur de points  max
-                for pilote in results:
-                    
-                    if results[pilote] > valeurmax:
-                        valeurmax = results[pilote]
-                        pilote_max = pilote
-                
-                #ajout a liste des 3 pilotes et supprime du dictionnaire
-                liste_top_3.append((pilote_max, valeurmax))
-                results.pop(pilote_max)
-
-            for pilote , points in liste_top_3:
-                print(f"{pilote} : {points} points")
-
-        except Exception as e :
-            print(e)
-
-
-    def top3_podium_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
-        #mettre tous les pilotes qui ont été dans l'écurie choisi
-        lst_pilotes = []
-        liste_nom = []
-
-        for course in gestion.lst_courses:
-           
-           for resultat in course.lst_resultats:
-               
-               if resultat.ecurie.nom == ecurie_choisi.nom:
-                    
-                    if resultat.pilote.driver_id not in liste_nom:
-                       lst_pilotes.append(resultat)
-                       liste_nom.append(resultat.pilote.driver_id)
-
-                    else:
-                        lst_pilotes.append(resultat)
-
-
+        #combine les résultats pour obtenir la liste trier finale
+        return Analyse.tri_points(petits) + [pivot] + Analyse.tri_points(grands)
 
     
     def pilotes_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
 
-        lst_pilotes = []
         liste_nom = []
         pilotes = {}
 
@@ -320,16 +264,12 @@ class Analyse:
 
                     if resultat.pilote.driver_id not in liste_nom:
                        liste_nom.append(resultat.pilote.driver_id)
-                       pilote = resultat.pilote.driver_id
+                       pilotes[resultat.pilote.driver_id] = 0
 
                     else:
-                        pilotes[pilote] = 0
+                        pilotes[resultat.pilote.driver_id] = 0
 
         return pilotes
-    
-
-
-
     
 
     def afficher_top3(results):
@@ -342,7 +282,7 @@ class Analyse:
 
             for _ in range(3):
 
-                valeurmax = 0
+                valeurmax = -1
                 pilote_max = ""
 
                 for pilote in results_copy:
@@ -375,12 +315,17 @@ class Analyse:
             for pilote in podium:
 
                 if pilote.driver_id in results:
-                    results[pilote.driver_id] += 1
+
+                    # vérifier l'écurie du pilote dans cette course
+                    for resultat in course.lst_resultats:
+
+                        if resultat.pilote.driver_id == pilote.driver_id and resultat.ecurie.nom == ecurie_choisi.nom:
+                            results[pilote.driver_id] += 1
 
         return results
     
 
-    def points_ecurie(gestion, ecurie_choisi):
+    def points_ecurie(gestion: Gestion_donnees, ecurie_choisi: Ecurie):
 
         results = Analyse.pilotes_ecurie(gestion, ecurie_choisi)
 
@@ -390,7 +335,27 @@ class Analyse:
 
                 pilote = resultat.pilote.driver_id
 
-                if pilote in results:
+                if pilote in results and resultat.ecurie.nom == ecurie_choisi.nom:
                     results[pilote] += resultat.points
 
         return results
+    
+
+    def win_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
+
+        results = Analyse.pilotes_ecurie(gestion, ecurie_choisi)
+
+        for course in gestion.lst_courses:
+
+            pilote = course.vainqueur()
+
+            if pilote.driver_id in results:
+
+                # vérifier l'écurie du pilote dans cette course
+                for resultat in course.lst_resultats:
+
+                    if resultat.pilote.driver_id == pilote.driver_id and resultat.ecurie.nom == ecurie_choisi.nom:
+                        results[pilote.driver_id] += 1
+
+        return results
+    
