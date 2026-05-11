@@ -1,4 +1,7 @@
 from question import Question
+import json
+import random
+import time
 
 class Quiz:
 
@@ -19,16 +22,11 @@ class Quiz:
 
         for dico in donnees:
         
-            if "album" in dico:
-                objet = Chanson(dico["id_media"], dico["titre"], dico["artiste"], dico["duree"], dico["nb_ecoutes"], dico["est_favori"], dico["album"])
 
-            elif "numero_episode" in dico:
-                objet = Podcast(dico["id_media"], dico["titre"], dico["artiste"], dico["duree"], dico["nb_ecoutes"], dico["est_favori"], dico["numero_episode"])
+            objet = Question(dico["question"], dico["choix_rep"], dico["reponse"], dico["fichier_image"])
 
-            else:
-                objet = Media(dico["id_media"], dico["titre"], dico["artiste"], dico["duree"], dico["nb_ecoutes"], dico["est_favori"])
 
-            self.liste_medias.append(objet)
+            self.questions.append(objet)
 
 
     def sauvegarder_json(self, source : str) -> None:
@@ -41,7 +39,7 @@ class Quiz:
         liste_dictionnaires = []
         for media in self.liste_medias:
             # 2. On appelle notre méthode pour obtenir la version dictionnaire
-            dico_media = media.conversion_dict()
+            dico_media = media.to_dict()
 	        # On ajoute à la liste de dictionnaires
             liste_dictionnaires.append(dico_media)
             
@@ -50,3 +48,27 @@ class Quiz:
             # json.dump ajoute la liste de dictio dans le fichier
             json.dump(liste_dictionnaires, fichier, indent=4)
         
+
+    def quiz(self):
+        creer_quiz = []
+        for _ in range(10):
+            index = random.randint(0,25)
+            creer_quiz.append(self.questions[index])
+
+        pointage = 0
+        for quest in creer_quiz:
+            print()
+            print(quest.question)
+            quest.afficher_image()
+            print(quest.choix_rep)
+            reponse_uti = input("Entrez la lettre : ")
+            if reponse_uti == quest.reponse:
+                pointage += 1
+                print("Bonne Réponse!")
+            else:
+                print(f"Mauvaise reponse. La reponse était {quest.reponse}")
+            print()
+            time.sleep(1.5)
+
+        
+            
