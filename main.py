@@ -76,6 +76,9 @@ while quitter != 0:
                                     #podiums
                                     case 3:
                                         pass
+                                    #wc
+                                    case 4:
+                                        pass
                             except:
                                 print("Choix du circuit out of range") 
                                 
@@ -105,12 +108,23 @@ while quitter != 0:
                
             #principal
             case 2:
-                pass
-
+                
+                Menu.menu_quiz()
             
-                
-                
-        
+                try:
+                    choix6 = int(input("Entre le numéro du choix voulu: "))
+                    
+                    match choix6:
+                        
+                        #palmarès
+                        case 1:
+                            pass
+                        #jeux
+                        case 2:
+                            pass
+                     
+                except:
+                    print("Choix du circuit out of range")  
         
     except:
         print("Choix du circuit out of range") 

@@ -97,6 +97,7 @@ class Menu:
         print("1. win")
         print("2. Points")#?
         print("3. Podiums")
+        print("4. Word champion")
         
     def menu_saisons():
         print("1. win")

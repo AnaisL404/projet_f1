@@ -6,9 +6,17 @@ from pilote import Pilote
 from ecurie import Ecurie
 
 class Analyse:
+    """permet de faire toutes les fonctions d'analyse
+    """
     
 
-    def circuit_plus_longtemps(gestion : Gestion_donnees):
+    def circuit_plus_longtemps(gestion : Gestion_donnees) -> None:
+        """permet de faire la diagramme des circuits qui sont la depuis le plus longtemps
+
+        Args:
+            gestion (Gestion_donnees): classe gestion de données (API)
+        """
+        
         dico_courses = {}
 
         for course in gestion.lst_courses:
@@ -53,12 +61,20 @@ class Analyse:
         plt.show()
     
         
+
+
+    def meilleur_temps_circuit(gestion: Gestion_donnees) -> str:
+        """donne le temps le plus rapide du circuit choisi
+
+        Args:
+            gestion (Gestion_donnees): gestion (Gestion_donnees): classe gestion de données (API)
+
+        Returns:
+            str: retourne le temps le plus rapide ainsi que le pilote qui la effectuer et l'année
+        """
         
-
-
-    def meilleur_temps_circuit(gestion: Gestion_donnees):
         # boucle pour voir les afficher les nom de circuit et pouvoir choisir le circuit voulu
-        liste_circuit = []
+        liste_circuit : list[Course] = []
         liste_nom = []
 
         for course in gestion.lst_courses:
@@ -83,7 +99,7 @@ class Analyse:
         except:
             print("Choix du circuit out of range")
 
-        #comparer les temps
+        #initiallisation des valeurs
         best_lap_min = 10000
         best_lap_sec = 10000
         best_lap_milli = 10000
@@ -98,11 +114,12 @@ class Analyse:
                         minutes_str, reste = resultat.meilleur_tour.split(":")
                         secondes_str, millisecondes_str = reste.split(".")
 
-
+                        #valeurs du temps à comparer
                         min= int(minutes_str)
                         sec = int(secondes_str)
                         milli = int(millisecondes_str)
                         
+                    #comparer les le temps avec les variable initialiser
                         if min < best_lap_min:
                             best_lap_min = min
                             best_lap_sec = sec
@@ -124,7 +141,8 @@ class Analyse:
                                     best_lap_milli = milli
                                     pilote = resultat.pilote.nom
                                     annee = course.saison  
-
+ 
+    #rajouter des zéros pour être comme dans le json
         if len(str(best_lap_milli)) == 2:
             best_lap_milli = f"0{best_lap_milli}"
 
@@ -137,8 +155,18 @@ class Analyse:
         return (f"Le meilleur temps à été réaliser par {pilote} en {annee} et est de {meilleur_temps}")
 
 
-    def plus_de_podium(gestion : Gestion_donnees, pilote_choisi: Pilote):
+    def plus_de_podium(gestion : Gestion_donnees, pilote_choisi: Pilote) -> str:
+        """permet de donner le nombre de podium effectuer par un pilote choisi
 
+        Args:
+            gestion (Gestion_donnees): gestion (Gestion_donnees): classe gestion de données (API)
+            pilote_choisi (Pilote): pilote choisi par l'utilisateur
+
+        Returns:
+            str: retourne le nombre de podium effectuer par le pilote en phrase
+        """
+
+        #initialisation
         nb_podium = 0
 
         for course in gestion.lst_courses:
@@ -148,11 +176,23 @@ class Analyse:
 
             if pilote_choisi.driver_id in podium_nom:
                 nb_podium += 1
+                
         return f"Le pilote {pilote_choisi} à fait {nb_podium} podiums dans sa carrière"
         
-    def plus_de_win(gestion : Gestion_donnees, pilote_choisi: Pilote):
+    def plus_de_win(gestion : Gestion_donnees, pilote_choisi: Pilote) -> str:
+        """permet de donner le nombre de victoire d'un pilote choisi
 
+        Args:
+            gestion (Gestion_donnees): gestion (Gestion_donnees): classe gestion de données (API)
+            pilote_choisi (Pilote): pilote choisi par l'utilisateur
+
+        Returns:
+            str: retourne le nombre de victoire effectuer par le pilote en phrase
+        """
+
+        #initialisation
         nb_win = 0
+        
         for course in gestion.lst_courses:
 
             if pilote_choisi.driver_id == course.vainqueur().driver_id:
@@ -162,14 +202,22 @@ class Analyse:
 
     
 
-    def pourcentage_win_saison(gestion : Gestion_donnees, saison_voulue : int):
-        courses_saison = []
+    def pourcentage_win_saison(gestion : Gestion_donnees, saison_voulue : int) -> None:
+        """permet de faire le diagramme de la répartition des points de la saison par pilote
+
+        Args:
+            gestion (Gestion_donnees): retourne le nombre de podium effectuer par le pilote en phrase
+            saison_voulue (int): saison choisi par l'utilisateur
+        """
+        
+        courses_saison : list[Course] = []
 
         for course in gestion.lst_courses:
 
             if course.saison == saison_voulue:
                 courses_saison.append(course)
 
+        #initialisation
         winners = []
         nb_wins = []
 
@@ -200,8 +248,17 @@ class Analyse:
 
         plt.show()
 
-    ## les trier pour qu'il soit en ordre!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    def points_saison(gestion : Gestion_donnees, saison_voulue : int):
+    def points_saison(gestion : Gestion_donnees, saison_voulue : int) -> list:
+        """fait un dictionnaire des pilote avec leur points gagner durant la saison
+
+        Args:
+            gestion (Gestion_donnees): retourne le nombre de podium effectuer par le pilote en phrase
+            saison_voulue (int): saison choisi par l'utilisateur
+
+        Returns:
+            list: retourne une liste de liste contenant le pilote et leurs points
+        """
+        
         courses_saison : list[Course]= []
 
         for course in gestion.lst_courses:
@@ -221,13 +278,22 @@ class Analyse:
                 else:
                     results[resultat.pilote.driver_id] = resultat.points
         
-        lst_lst = list(results.items())
+            lst_lst : list[list] = list(results.items())
 
         return lst_lst
 
 
 
     def tri_points(lst_lst : list) -> list[list]:
+        """permet de trié les points de la liste de liste pilote:points
+
+        Args:
+            lst_lst (list): liste de liste pilote:points
+
+        Returns:
+            list[list]: liste de loiste pilote:points trié
+        """
+        
         liste_a_trier : list[list] = lst_lst.copy()
 
         #si la liste est vide ou ne contient qu'un élément
@@ -251,8 +317,17 @@ class Analyse:
         return Analyse.tri_points(petits) + [pivot] + Analyse.tri_points(grands)
 
     
-    def pilotes_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
+    def pilotes_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie) -> dict:
+        """fait le trie de chaque pilotes qui on fait parti de l'écurie choisi
 
+        Args:
+            gestion (Gestion_donnees): retourne le nombre de podium effectuer par le pilote en phrase
+            ecurie_choisi (Ecurie): écurie choisi par l'utilisateur
+
+        Returns:
+            dict: retounre le dictionnaire des pilotes de l'écurie 
+        """
+        #initialisation
         liste_nom = []
         pilotes = {}
 
@@ -272,8 +347,13 @@ class Analyse:
         return pilotes
     
 
-    def afficher_top3(results):
+    def afficher_top3(results: dict) -> None:
+        """permet d'afficher les 3 meilleurs pilotes de l'écurie
 
+        Args:
+            results (dict): dictionnaire des pilotes et de leurs valeurs de points/podiums/wins
+        """
+        
         results_copy = results.copy()
 
         liste_top_3 = []
@@ -304,9 +384,18 @@ class Analyse:
             print(e)
 
 
-    def podiums_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
+    def podiums_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie) -> dict:
+        """permet de comptabiliser les podiums des pilotes de l'écurie
 
-        results = Analyse.pilotes_ecurie(gestion, ecurie_choisi)
+        Args:
+            gestion (Gestion_donnees): retourne le nombre de podium effectuer par le pilote en phrase
+            ecurie_choisi (Ecurie): écurie choisi par l'utilisateur
+
+        Returns:
+            dict: dictionnaire des pilotes et de leurs valeurs de podiums
+        """
+
+        results : dict = Analyse.pilotes_ecurie(gestion, ecurie_choisi)
 
         for course in gestion.lst_courses:
 
@@ -325,9 +414,19 @@ class Analyse:
         return results
     
 
-    def points_ecurie(gestion: Gestion_donnees, ecurie_choisi: Ecurie):
+    def points_ecurie(gestion: Gestion_donnees, ecurie_choisi: Ecurie) -> dict:
+        """permet de comptabiliser les points des pilotes de l'écurie
 
-        results = Analyse.pilotes_ecurie(gestion, ecurie_choisi)
+        Args:
+            gestion (Gestion_donnees): retourne le nombre de podium effectuer par le pilote en phrase
+            ecurie_choisi (Ecurie): écurie choisi par l'utilisateur
+
+        Returns:
+            dict: dictionnaire des pilotes et de leurs valeurs de points
+        """
+    
+
+        results : dict = Analyse.pilotes_ecurie(gestion, ecurie_choisi)
 
         for course in gestion.lst_courses:
 
@@ -341,9 +440,18 @@ class Analyse:
         return results
     
 
-    def win_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie):
+    def win_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie) -> dict:
+        """permet de comptabiliser les wins des pilotes de l'écurie
 
-        results = Analyse.pilotes_ecurie(gestion, ecurie_choisi)
+        Args:
+            gestion (Gestion_donnees): retourne le nombre de podium effectuer par le pilote en phrase
+            ecurie_choisi (Ecurie): écurie choisi par l'utilisateur
+
+        Returns:
+            dict: dictionnaire des pilotes et de leurs valeurs de wins
+        """
+
+        results : dict = Analyse.pilotes_ecurie(gestion, ecurie_choisi)
 
         for course in gestion.lst_courses:
 
