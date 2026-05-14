@@ -178,6 +178,27 @@ class Analyse:
                 nb_podium += 1
                 
         return f"Le pilote {pilote_choisi} à fait {nb_podium} podiums dans sa carrière"
+    
+    
+    def plus_de_points(gestion : Gestion_donnees, pilote_choisi: Pilote) -> str:
+    
+    
+        #initialisation
+        nb_points = 0
+
+        for course in gestion.lst_courses:
+            
+            for results in course.lst_resultats:
+                
+                if results.pilote.driver_id == pilote_choisi.driver_id:
+                    nb_points += results.points     
+                
+        return f"Le pilote {pilote_choisi} à fait {nb_points} points dans sa carrière"
+
+    
+    
+    
+    
         
     def plus_de_win(gestion : Gestion_donnees, pilote_choisi: Pilote) -> str:
         """permet de donner le nombre de victoire d'un pilote choisi
@@ -284,7 +305,7 @@ class Analyse:
 
 
 
-    def tri_points(lst_lst : list) -> list[list]:
+    def tri(lst_lst : list) -> list[list]:
         """permet de trié les points de la liste de liste pilote:points
 
         Args:
@@ -314,7 +335,7 @@ class Analyse:
                 grands.append(liste_a_trier[x]) #ajoute les éléments plus grands que le pivot
 
         #combine les résultats pour obtenir la liste trier finale
-        return Analyse.tri_points(petits) + [pivot] + Analyse.tri_points(grands)
+        return Analyse.tri(petits) + [pivot] + Analyse.tri(grands)
 
     
     def pilotes_ecurie(gestion : Gestion_donnees, ecurie_choisi: Ecurie) -> dict:
@@ -466,4 +487,38 @@ class Analyse:
                         results[pilote.driver_id] += 1
 
         return results
+    
+    def wc(gestion: Gestion_donnees) -> None:
+        
+        #initialisation
+        dico_wc = {}
+        lst_wc: list[list] = []
+        
+        #boucle pour faire toutes les saions
+        for x in range(1950,2026):
+            
+            lst_lst = Analyse.points_saison(gestion, x)
+            
+            liste_trier = Analyse.tri(lst_lst)
+            
+            world_champion = liste_trier.pop()
+                 
+            lst_wc.append(world_champion)
+            
+        for pilote in lst_wc:
+
+            if pilote.driver_id in dico_wc:
+                dico_wc[pilote.driver_id] += 1
+                
+            else:
+                dico_wc[pilote.driver_id] = 1
+          
+        lst_de_lst : list[list] = list(dico_wc.items()) 
+        
+        liste_trier_wc = Analyse.tri(lst_de_lst)
+        
+        for driver in liste_trier_wc:
+            
+            print(driver)
+            
     
