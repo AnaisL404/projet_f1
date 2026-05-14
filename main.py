@@ -72,7 +72,7 @@ while quitter != 0:
                              
                         #stat       
                         case 3:
-                            print()
+                
                             Menu.menu_pilotes()
                             print()
                 
@@ -177,10 +177,9 @@ while quitter != 0:
                             quiz.quiz()
                             quiz.sauvegarder_json_palma("palmares.json")
                      
-                except:
+                except Exception as e :
                     print()
-                    print("Choix out of range")  
-                    print()
+                    print(e) 
         
     except:
         print("Choix out of range") 

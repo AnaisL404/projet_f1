@@ -499,6 +499,7 @@ class Analyse:
             
             lst_lst = Analyse.points_saison(gestion, x)
             
+            
             liste_trier = Analyse.tri(lst_lst)
             
             world_champion = liste_trier.pop()
@@ -507,12 +508,14 @@ class Analyse:
             
         for pilote in lst_wc:
 
-            if pilote.driver_id in dico_wc:
-                dico_wc[pilote.driver_id] += 1
+            nom = pilote[0]
+
+            if nom in dico_wc:
+                dico_wc[nom] += 1
                 
             else:
-                dico_wc[pilote.driver_id] = 1
-          
+                dico_wc[nom] = 1
+                
         lst_de_lst : list[list] = list(dico_wc.items()) 
         
         liste_trier_wc = Analyse.tri(lst_de_lst)

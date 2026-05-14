@@ -3,10 +3,12 @@ import json
 import random
 import time
 
+##############A CHAWUE FOIS QUON RECOMMENCE LE MAIN LE JSON PALMARE CE REMETS A 0
+
 class Quiz:
 
     def __init__(self):
-        self.palmares = []
+        self.palmares: list[dict] = []
         self.questions : list[Question] = []
 
 
@@ -37,12 +39,27 @@ class Quiz:
         """
             
         # 3. On sauvegarde la liste complète d'un seul coup !
-        with open("source.json", "w", encoding="utf-8") as fichier:
+        with open(source, "w", encoding="utf-8") as fichier:
             # json.dump ajoute la liste de dictio dans le fichier
-            json.dump(self.palmares, fichier, indent=4)
+            json.dump(self.palmares, fichier, indent=4, ensure_ascii=False)
         
+            
+    #essayer de changer mais marche tjs pas   
+    #def lire_json_palma(self, source : str):
 
+        #with open(source, "r", encoding="utf-8") as fichier:
+
+           # donnees = json.load(fichier)
+
+       # for dico in donnees:
+
+          #  for nom in dico:
+
+             #   self.palmares.append((nom, dico[nom]))
+                
     def lire_json_palma(self, source : str):
+        self.palmares = []
+        
         with open(source, "r", encoding="utf-8") as fichier:
     
             donnees = json.load(fichier)
@@ -52,21 +69,21 @@ class Quiz:
 
 
     def quiz(self):
-        creer_quiz = []
-        for _ in range(10):
-            index = random.randint(0,25)
-            creer_quiz.append(self.questions[index])
-
+        creer_quiz = random.sample(self.questions, 3)
+        
         pointage = 0
+        
         for quest in creer_quiz:
             print()
             print(quest.question)
             print(quest.choix_rep)
             quest.afficher_image()
             reponse_uti = input("Entrez la lettre : ")
+            
             if reponse_uti == quest.reponse:
                 pointage += 1
                 print("Bonne Réponse!")
+                
             else:
                 print(f"Mauvaise reponse. La reponse était {quest.reponse}")
             print()
@@ -75,17 +92,53 @@ class Quiz:
         print(f"Votre pointage est : {pointage}")
 
         nom = input("Entrez votre nom pour le palmarès : ")
-        dico = {nom : pointage}
+        dico = {"nom" : nom, "pointage" : pointage}
         self.palmares.append(dico)
 
-        
-    def trier_palma(self):
-        valeurmax = 10
-        for _ in range(10):
-            for personne in self.palmares:
-                if self.palmares[personne] == valeurmax:
-                    print(f"{personne} : {self.palmares[personne]}")
-            valeurmax -= 1
-                
+     #essayer de changer mais marche tjs pas           
+    #def trier_palma(self):
 
+        #valeurmax = 10
+
+        #for _ in range(10):
+
+            #for personne in self.palmares:
+
+               # if personne[1] == valeurmax:
+
+                   # print(f"{personne[0]} : {personne[1]}")
+
+           # valeurmax -= 1
+
+    #def trier_palma(self):
+        #valeurmax = 10
+        
+        #for _ in range(10):
+            
+           # for personne in self.palmares:
+                
+                #if self.palmares["pointage"] == valeurmax:
+                   # print(f"{self.palmares["nom"]} : {self.palmares["pointage"]}")
+                    
+            #valeurmax -= 1
+            
+    def trier_palma(self):
+        scores = []
+
+        # 1. récupérer tous les scores uniques
+        for personne in self.palmares:
+            if personne["pointage"] not in scores:
+                scores.append(personne["pointage"])
+
+        # 2. tri décroissant manuel des scores
+        for i in range(len(scores)):
+            for j in range(i + 1, len(scores)):
+                if scores[j] > scores[i]:
+                    scores[i], scores[j] = scores[j], scores[i]
+
+        # 3. affichage
+        for score in scores:
+            for personne in self.palmares:
+                if personne["pointage"] == score:
+                    print(f'{personne["nom"]} : {personne["pointage"]}')
         
