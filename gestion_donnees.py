@@ -166,10 +166,12 @@ class Gestion_donnees:
             json.dump(liste_dictionnaires, fichier, indent=4, ensure_ascii=False)
 
     def collecter_donnee(self):
+        
         try:
             print("essaie de la lecture du fichiers json des données")
             self.charger_json("donnee.json") 
             print("Lecture du fichier json réusie !!")
+            
         except:
             print("aucun fichier json disponible, lancement de la recupération API !")
             self.call_api()

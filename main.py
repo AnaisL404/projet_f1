@@ -10,7 +10,11 @@ from quiz import Quiz
 gestion = Gestion_donnees()
 
 gestion.collecter_donnee()
+
 quiz = Quiz()
+
+quiz.lire_json_question("questions.json")
+quiz.lire_json_palma("palmares.json")
 
 quitter = 1000000000
 
@@ -169,13 +173,10 @@ while quitter != 0:
                         
                         #palmarès
                         case 1:
-                            quiz.lire_json_palma("palmares.json")
                             quiz.trier_palma()
                         #quiz
                         case 2:
-                            quiz.lire_json_question("questions.json")
                             quiz.quiz()
-                            quiz.sauvegarder_json_palma("palmares.json")
                      
                 except Exception as e :
                     print()

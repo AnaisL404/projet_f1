@@ -3,7 +3,6 @@ import json
 import random
 import time
 
-##############A CHAWUE FOIS QUON RECOMMENCE LE MAIN LE JSON PALMARE CE REMETS A 0
 
 class Quiz:
 
@@ -43,19 +42,7 @@ class Quiz:
             # json.dump ajoute la liste de dictio dans le fichier
             json.dump(self.palmares, fichier, indent=4, ensure_ascii=False)
         
-            
-    #essayer de changer mais marche tjs pas   
-    #def lire_json_palma(self, source : str):
 
-        #with open(source, "r", encoding="utf-8") as fichier:
-
-           # donnees = json.load(fichier)
-
-       # for dico in donnees:
-
-          #  for nom in dico:
-
-             #   self.palmares.append((nom, dico[nom]))
                 
     def lire_json_palma(self, source : str):
         self.palmares = []
@@ -94,33 +81,9 @@ class Quiz:
         nom = input("Entrez votre nom pour le palmarès : ")
         dico = {"nom" : nom, "pointage" : pointage}
         self.palmares.append(dico)
-
-     #essayer de changer mais marche tjs pas           
-    #def trier_palma(self):
-
-        #valeurmax = 10
-
-        #for _ in range(10):
-
-            #for personne in self.palmares:
-
-               # if personne[1] == valeurmax:
-
-                   # print(f"{personne[0]} : {personne[1]}")
-
-           # valeurmax -= 1
-
-    #def trier_palma(self):
-        #valeurmax = 10
         
-        #for _ in range(10):
-            
-           # for personne in self.palmares:
-                
-                #if self.palmares["pointage"] == valeurmax:
-                   # print(f"{self.palmares["nom"]} : {self.palmares["pointage"]}")
-                    
-            #valeurmax -= 1
+        Quiz.sauvegarder_json_palma(self, "palmares.json")
+
             
     def trier_palma(self):
         scores = []
