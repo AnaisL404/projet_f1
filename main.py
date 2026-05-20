@@ -42,7 +42,29 @@ while quitter != 0:
                         
                         #stat
                         case 1:
-                            pass
+                            print()
+                            Menu.menu_circuit()
+                            print()
+                            
+                            try:
+                                choix3 = int(input("Entre le numéro du choix voulu: "))
+                                print()
+                                
+                                match choix3:
+                                    
+                                    #circuit les plus vieux
+                                    case 1:
+                                        
+                                        Analyse.circuit_plus_longtemps(gestion)
+                                        
+                                    # best time
+                                    case 2:
+                                        
+                                        Analyse.meilleur_temps_circuit(gestion)
+                     
+                            except :
+                                print("Choix out of range")   
+                            
                         #stat
                         case 2:
                             print()
@@ -50,10 +72,10 @@ while quitter != 0:
                             print()
                 
                             try:
-                                choix3 = int(input("Entre le numéro du choix voulu: "))
+                                choix4 = int(input("Entre le numéro du choix voulu: "))
                                 print()
                                 
-                                match choix3:
+                                match choix4:
                                     
                                     #win
                                     case 1:
@@ -77,14 +99,19 @@ while quitter != 0:
                             print()
                 
                             try:
-                                choix4 = int(input("Entre le numéro du choix voulu: "))
+                                choix5 = int(input("Entre le numéro du choix voulu: "))
                                 print()
                                 
-                                match choix4:
+                                match choix5:
                                     
                                     #win
                                     case 1:
-                                        pass
+                                        pilote_str = Menu.choix_pilote(gestion)
+                                        
+                                        print()
+                                        print(Analyse.plus_de_win(gestion, pilote_str))
+                                    
+                                        
                                     #points
                                     case 2:
                                         pilote_str = Menu.choix_pilote(gestion)
@@ -94,11 +121,16 @@ while quitter != 0:
                                         
                                     #podiums
                                     case 3:
-                                        pass
+                                        pilote_str = Menu.choix_pilote(gestion)
+                                        
+                                        print()
+                                        print(Analyse.plus_de_podium(gestion, pilote_str))
+                                        
                                     #wc
                                     case 4:
                                         print()
-                                        Analyse.wc(gestion)
+                                        Analyse.wc(gestion) 
+                                        
                             except Exception as e :
                                 print(e) 
                                 
@@ -109,20 +141,40 @@ while quitter != 0:
                             print()
                 
                             try:
-                                choix5 = int(input("Entre le numéro du choix voulu: "))
+                                choix6 = int(input("Entre le numéro du choix voulu: "))
                                 print()
                                 
-                                match choix5:
+                                match choix6:
                                     
                                     #win
                                     case 1:
-                                        pass
+                                        saison_voulue = Menu.choix_saison()
+                                        
+                                        Analyse.pourcentage_win_saison(gestion, saison_voulue)
+                                        
                                     #points
                                     case 2:
-                                        pass
+                                        saison_voulue = Menu.choix_saison()
+                                        
+                                        lst_lst = Analyse.points_saison(gestion, saison_voulue)
+                                        
+                                        liste = Analyse.tri(lst_lst)
+                                        
+                                        for pilote in liste:
+                                            print(f"Le pilote {pilote[0]} à fait {pilote[1]} points dans la saison {saison_voulue}")
+                                    
+                                    
+                                    
                                     #podiums
                                     case 3:
-                                        pass
+                                        saison_voulue = Menu.choix_saison()
+                                        
+                                        lst_lst = Analyse.podiums_saison(gestion, saison_voulue)
+                                        
+                                        liste = Analyse.tri(lst_lst)
+                                        
+                                        for pilote in liste:
+                                            print(f"Le pilote {pilote[0]} à fait {pilote[1]} points dans la saison {saison_voulue}")
                             except:
                                 print()
                                 print("Choix out of range") 
@@ -138,10 +190,10 @@ while quitter != 0:
                 print()
             
                 try:
-                    choix6 = int(input("Entre le numéro du choix voulu: "))
+                    choix7 = int(input("Entre le numéro du choix voulu: "))
                     print()
                     
-                    match choix6:
+                    match choix7:
                         
                         #palmarès
                         case 1:

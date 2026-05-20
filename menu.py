@@ -53,7 +53,11 @@ class Menu:
     def menu_saisons():
         print("1. win")
         print("2. Points")
-        print("3. Podiums")#?
+        print("3. Podiums")
+        
+    def menu_circuit():
+        print("1. Circuit les plus vieux")
+        print("2. Meilleur temps d'un circuit")
         
         
     #choix de l'utilisateur
