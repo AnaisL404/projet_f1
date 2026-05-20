@@ -79,13 +79,35 @@ while quitter != 0:
                                     
                                     #win
                                     case 1:
-                                        pass
+                                        ecurie_str = Menu.choix_ecurie()
+                                        
+                                        print()
+                                        
+                                        results = Analyse.win_ecurie(gestion, ecurie_str)
+                                        
+                                        Analyse.afficher_top3(results)
+                                        
+                                        
                                     #points
                                     case 2:
-                                        pass
+                                        ecurie_str = Menu.choix_ecurie()
+                                        
+                                        print()
+                                        
+                                        results = Analyse.points_ecurie(gestion, ecurie_str)
+                                        
+                                        Analyse.afficher_top3(results)
+                                        
                                     #podiums
                                     case 3:
-                                        pass
+                                        ecurie_str = Menu.choix_ecurie()
+                                        
+                                        print()
+                                        
+                                        results = Analyse.podiums_ecurie(gestion, ecurie_str)
+                                        
+                                        Analyse.afficher_top3(results)
+                                        
                             except:
                                 print()
                                 print("Choix  out of range")
@@ -131,8 +153,9 @@ while quitter != 0:
                                         print()
                                         Analyse.wc(gestion) 
                                         
-                            except Exception as e :
-                                print(e) 
+                            except :
+                                print()
+                                print("Choix out of range") 
                                 
                         #stat       
                         case 4:
@@ -150,11 +173,15 @@ while quitter != 0:
                                     case 1:
                                         saison_voulue = Menu.choix_saison()
                                         
+                                        print()
+                                        
                                         Analyse.pourcentage_win_saison(gestion, saison_voulue)
                                         
                                     #points
                                     case 2:
                                         saison_voulue = Menu.choix_saison()
+                                        
+                                        print()
                                         
                                         lst_lst = Analyse.points_saison(gestion, saison_voulue)
                                         
@@ -169,12 +196,14 @@ while quitter != 0:
                                     case 3:
                                         saison_voulue = Menu.choix_saison()
                                         
+                                        print()
+                                        
                                         lst_lst = Analyse.podiums_saison(gestion, saison_voulue)
                                         
                                         liste = Analyse.tri(lst_lst)
                                         
                                         for pilote in liste:
-                                            print(f"Le pilote {pilote[0]} à fait {pilote[1]} points dans la saison {saison_voulue}")
+                                            print(f"Le pilote {pilote[0]} à fait {pilote[1]} podiums dans la saison {saison_voulue}")
                             except:
                                 print()
                                 print("Choix out of range") 
@@ -202,9 +231,9 @@ while quitter != 0:
                         case 2:
                             quiz.quiz()
                      
-                except Exception as e :
+                except :
                     print()
-                    print(e) 
+                    print("Choix out of range") 
         
     except:
         print("Choix out of range") 
