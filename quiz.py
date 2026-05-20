@@ -56,7 +56,7 @@ class Quiz:
 
 
     def quiz(self):
-        creer_quiz = random.sample(self.questions, 3)
+        creer_quiz = random.sample(self.questions, 10)
         
         pointage = 0
         

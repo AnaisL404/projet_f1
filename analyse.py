@@ -172,7 +172,7 @@ class Analyse:
         for course in gestion.lst_courses:
 
             podium = course.podium()
-            podium_nom = [podium[0].driver_id, podium[1].driver_id, podium[2].driver_id,]
+            podium_nom = [podium[0].driver_id, podium[1].driver_id, podium[2].driver_id]
 
             if pilote_choisi.driver_id in podium_nom:
                 nb_podium += 1
@@ -246,7 +246,7 @@ class Analyse:
 
             for resultat in course.lst_resultats:
 
-                if resultat.position == 1:
+                if resultat.pilote.driver_id == course.vainqueur().driver_id:
 
                     if resultat.pilote.driver_id in winners:
 
@@ -302,6 +302,37 @@ class Analyse:
             lst_lst : list[list] = list(results.items())
 
         return lst_lst
+    
+    def podiums_saison(gestion : Gestion_donnees, saison_voulue : int) -> list:
+        
+        courses_saison : list[Course]= []
+
+        for course in gestion.lst_courses:
+
+            if course.saison == saison_voulue:
+                courses_saison.append(course)
+
+        results = {}
+
+        for course in courses_saison:
+            
+            podium = course.podium()
+            podium_nom = [podium[0].driver_id, podium[1].driver_id, podium[2].driver_id]
+
+            for resultat in course.lst_resultats:
+                
+                if resultat.pilote.driver_id in podium_nom:
+
+                    if resultat.pilote.driver_id in results:
+                        results[resultat.pilote.driver_id] += 1
+
+                    else:
+                        results[resultat.pilote.driver_id] = 1
+        
+            lst_lst : list[list] = list(results.items())
+
+        return lst_lst
+        
 
 
 

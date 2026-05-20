@@ -1,8 +1,4 @@
 from gestion_donnees import Gestion_donnees
-from resultats import Resultats
-from course import Course
-from pilote import Pilote
-from ecurie import Ecurie
 from analyse import Analyse
 from menu import Menu
 from quiz import Quiz
@@ -91,35 +87,11 @@ while quitter != 0:
                                         pass
                                     #points
                                     case 2:
+                                        pilote_str = Menu.choix_pilote(gestion)
                                         
-                                        #input des pilotes
-                                        #choisir le pilote
-                                        lst_pilote = []
-                                        liste_nom = []
-
-                                        for pilote in gestion.lst_pilotes:
-                                                
-                                            if pilote.driver_id not in liste_nom:
-                                                lst_pilote.append(pilote)
-                                                liste_nom.append(pilote.driver_id)
-
-                                        index = 0
-                                        for driver in lst_pilote:
-                                            print(f"{index}. {driver.prenom}  {driver.nom}")
-                                            index += 1
-                                        try:
-                                            print()
-                                            pilote_int = int(input("Entrez le numéro du pilote voulu: "))
-                                            pilote_str = lst_pilote[pilote_int]
-
-                                        except:
-                                            print()
-                                            print("Choix out of range")
-                                            print()
-
-                                
                                         print()
                                         print(Analyse.plus_de_points(gestion, pilote_str))
+                                        
                                     #podiums
                                     case 3:
                                         pass
