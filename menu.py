@@ -7,20 +7,6 @@ from analyse import Analyse
 
 class Menu:
 
-    #print(f"Le podium est:")
-    #       print(f"{premier}🥇")
-    #      print(f"{deuxieme}🥈")
-    #     print(f"{troisieme}🥉")
-    
-    
-    #lst_lst = Analyse.points_saison(gestion, 2025)
-
-    #info = Analyse.tri_points(lst_lst)
-
-    #for x in info:
-        #print(f"{x[0]} : {x[1]} points")
-
-
     ### Les menus
 
     def menu_principal():
