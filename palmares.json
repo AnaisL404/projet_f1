@@ -1,3 +1,14 @@
 [
-    
+    {
+        "nom": "kako",
+        "pointage": 9
+    },
+    {
+        "nom": "Joe",
+        "pointage": 6
+    },
+    {
+        "nom": "Bob",
+        "pointage": 10
+    }
 ]

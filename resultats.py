@@ -62,7 +62,7 @@ class Resultats:
         """
         if self.statut == "Finished":
             return True
-        else: ## jsp comment on va faire mais mettre le status du genre retirer, dsq, dns ect
+        else: 
             return False
         
     def to_dict(self) -> dict:

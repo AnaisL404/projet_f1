@@ -61,6 +61,11 @@ class Course:
         }
     
     def vainqueur(self) -> Pilote:
+        """Permet de trouver le vainqueur d'une course
+
+        Returns:
+            Pilote: le pilote qui a gagné la course
+        """
         for resultat in self.lst_resultats:
             if resultat.position == 1:
                 vainqueur = resultat.pilote
@@ -68,6 +73,11 @@ class Course:
         return vainqueur
     
     def podium(self) -> list:
+        """Permet de créer le podium d'une course
+
+        Returns:
+            list: la liste des trois pilotes sur le podium
+        """
         for resultat in self.lst_resultats:
             if resultat.position == 1:
                 premier = resultat.pilote

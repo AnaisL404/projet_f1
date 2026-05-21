@@ -3,6 +3,8 @@ from matplotlib import image
 
 
 class Question:
+    """Représente une question du quiz
+    """
 
     def __init__(self, question : str, choix_rep : str, reponse : str, fichier_image : str ):
         self.question = question
@@ -10,10 +12,11 @@ class Question:
         self.reponse = reponse
         self.fichier_image = fichier_image
 
-        
 
 
     def afficher_image(self):
+        """Permet d'afficher les images du quiz
+        """
         img = image.imread(f"images/{self.fichier_image}")    
         plt.imshow(img)
         plt.axis('off')

@@ -304,6 +304,15 @@ class Analyse:
         return lst_lst
     
     def podiums_saison(gestion : Gestion_donnees, saison_voulue : int) -> list:
+        """Fait un dictionnaire des podiums de la saison
+
+        Args:
+            gestion (Gestion_donnees): l'objet gestion qui contient toutes les données
+            saison_voulue (int): la saison entrée par l'utilisateur
+
+        Returns:
+            list: la iste de liste contenan tles pilotes et leur nombre de podiums
+        """
         
         courses_saison : list[Course]= []
 
@@ -520,7 +529,11 @@ class Analyse:
         return results
     
     def wc(gestion: Gestion_donnees) -> None:
-        
+        """Permet de calculer le nombre de world championship des pilotes et de les afficher en ordre
+
+        Args:
+            gestion (Gestion_donnees): _description_
+        """
         #initialisation
         dico_wc = {}
         lst_wc: list[list] = []

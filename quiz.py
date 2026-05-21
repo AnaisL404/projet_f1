@@ -5,6 +5,8 @@ import time
 
 
 class Quiz:
+    """Représente le quiz sur la f1
+    """
 
     def __init__(self):
         self.palmares: list[dict] = []
@@ -44,7 +46,12 @@ class Quiz:
         
 
                 
-    def lire_json_palma(self, source : str):
+    def lire_json_palma(self, source : str) -> None:
+        """Permet de lire le json du palmares et de le sauvegarder dans l'objet quiz
+
+        Args:
+            source (str): le nom du fichier json
+        """
         self.palmares = []
         
         with open(source, "r", encoding="utf-8") as fichier:
@@ -55,7 +62,10 @@ class Quiz:
             self.palmares.append(dico)
 
 
-    def quiz(self):
+    def quiz(self) -> None:
+        """Permet de creer le quiz de dix questions, compter le poitage et sauvegarder dans le parlmares
+        """
+
         creer_quiz = random.sample(self.questions, 10)
         
         pointage = 0
@@ -85,7 +95,9 @@ class Quiz:
         Quiz.sauvegarder_json_palma(self, "palmares.json")
 
             
-    def trier_palma(self):
+    def trier_palma(self) -> None:
+        """Permet de d'afficher le palmares en ordre de pointage
+        """
         scores = []
 
         # 1. récupérer tous les scores uniques

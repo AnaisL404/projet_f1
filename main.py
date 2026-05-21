@@ -14,6 +14,7 @@ quiz.lire_json_palma("palmares.json")
 
 quitter = 1000000000
 
+#Boucle pour le programme
 while quitter != 0:
     print()
     Menu.menu_principal()
@@ -79,7 +80,7 @@ while quitter != 0:
                                     
                                     #win
                                     case 1:
-                                        ecurie_str = Menu.choix_ecurie()
+                                        ecurie_str = Menu.choix_ecurie(gestion)
                                         
                                         print()
                                         
@@ -90,7 +91,7 @@ while quitter != 0:
                                         
                                     #points
                                     case 2:
-                                        ecurie_str = Menu.choix_ecurie()
+                                        ecurie_str = Menu.choix_ecurie(gestion)
                                         
                                         print()
                                         
@@ -100,7 +101,7 @@ while quitter != 0:
                                         
                                     #podiums
                                     case 3:
-                                        ecurie_str = Menu.choix_ecurie()
+                                        ecurie_str = Menu.choix_ecurie(gestion)
                                         
                                         print()
                                         

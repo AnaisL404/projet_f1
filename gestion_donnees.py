@@ -7,6 +7,8 @@ from ecurie import Ecurie
 import time
 
 class Gestion_donnees:
+    """Contient toutes les données utilisées lors du programme
+    """
     def __init__(self):
         self.lst_courses : list[Course] = []
         self.lst_pilotes : list[Pilote] = []
@@ -23,6 +25,8 @@ class Gestion_donnees:
         raise Exception(f"Echec après 5 tentatives pour {url}")
 
     def call_api(self):
+        """Permet d'appler l'api t de lire les données necessaires
+        """
 
         url_base = "https://api.jolpi.ca/ergast/f1/"
 
@@ -146,7 +150,7 @@ class Gestion_donnees:
 
 
     def sauvegarder_json(self, file : str) -> None:
-        """Permet de sauvegarder les médias modifier lors du programme dasn le ficher json
+        """Permet de sauvegarder les données dans le ficher json
 
         Args:
             source (str): le ficher json
@@ -165,7 +169,9 @@ class Gestion_donnees:
             # json.dump ajoute la liste de dictio dans le fichier
             json.dump(liste_dictionnaires, fichier, indent=4, ensure_ascii=False)
 
-    def collecter_donnee(self):
+    def collecter_donnee(self) -> None:
+        """Permet de verifier si il y a un json ou si l'API doit etre appelé
+        """
         
         try:
             print("essaie de la lecture du fichiers json des données")
