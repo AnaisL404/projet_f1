@@ -151,6 +151,7 @@ class Analyse:
 
         meilleur_temps = (f"{best_lap_min}:{best_lap_sec}.{best_lap_milli}")
 
+        print()
         
         return (f"Le meilleur temps à été réaliser par {pilote} en {annee} et est de {meilleur_temps}")
 

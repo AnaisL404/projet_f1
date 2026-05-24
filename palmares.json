@@ -10,5 +10,9 @@
     {
         "nom": "Bob",
         "pointage": 10
+    },
+    {
+        "nom": "alexandre le bauyf",
+        "pointage": 0
     }
 ]

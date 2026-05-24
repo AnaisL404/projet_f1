@@ -61,7 +61,9 @@ while quitter != 0:
                                     # best time
                                     case 2:
                                         
-                                        Analyse.meilleur_temps_circuit(gestion)
+                                        print(Analyse.meilleur_temps_circuit(gestion))
+                                        
+                                
                      
                             except :
                                 print("Choix out of range")   
